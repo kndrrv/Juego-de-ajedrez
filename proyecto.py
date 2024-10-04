@@ -2,7 +2,7 @@
 tablero = [0] * 8
 
 for i in range(len(tablero)):
-        tablero[i] = ["__"] * 8
+        tablero[i] = ["  "] * 8
 
 def tablero_estandard(tablero):
     for i, row in enumerate(tablero):
@@ -12,26 +12,24 @@ def tablero_estandard(tablero):
         print("\n")
     print(" " * 3 + "a" + " " * 2 + "b" + " " * 2 + "c" + " " * 2 + "d" + " " * 2 + "e" + " " * 2 + "f" + " " * 2 + "g" + " " * 2 + "h")
 
-tablero_estandard(tablero)
-
 # crear las piezas 
 
 dic_piezas_blancas = {
-    "P": [(6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7)],
-    "C": [(7, 1), (7, 6)],
-    "T": [(7, 2), (7, 5)],
-    "A": [(7, 0), (7, 7)],
-    "D": [(7, 3)],
-    "R": [(7, 4)]
+    "bP": [(6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7)],
+    "bC": [(7, 1), (7, 6)],
+    "bT": [(7, 2), (7, 5)],
+    "bA": [(7, 0), (7, 7)],
+    "bD": [(7, 3)],
+    "bR": [(7, 4)]
     }
 
 dic_piezas_negras = {
-    "P": [(1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7)],
-    "C": [(0, 1), (0, 6)],
-    "T": [(0, 2), (0, 5)],
-    "A": [(0, 0), (0, 7)],
-    "D": [(0, 3)],
-    "R": [(0, 4)]
+    "nP": [(1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7)],
+    "nC": [(0, 1), (0, 6)],
+    "nT": [(0, 2), (0, 5)],
+    "nA": [(0, 0), (0, 7)],
+    "nD": [(0, 3)],
+    "nR": [(0, 4)]
     }
 
 col_mapa = {
@@ -43,5 +41,55 @@ col_mapa = {
     "f": 5,
     "g": 6,
     "h": 7
+    }
 
-}
+# poner piezas en el tablero
+def poner_piezas(tablero):
+    for pieza, squares in dic_piezas_blancas.items(): # Piezas blancas
+        for square in squares:
+               x, y = square[0], square[1]
+               tablero[x][y] = pieza
+
+    for pieza, squares in dic_piezas_negras.items(): # Piezas negras
+        for square in squares:
+               x, y = square[0], square[1]
+               tablero[x][y] = pieza
+
+poner_piezas(tablero)
+
+# creación del turno
+turno = 1
+
+while(True):
+    tablero_estandard(tablero)
+    print("")
+
+    jugador = ""
+    if turno % 2 == 1:
+        jugador = "Blanco"
+    else:
+        jugador = "Negro"
+
+    turno += 1
+
+    print(f"Es el turno del jugador {jugador}")
+    print("")
+    break
+
+# Mover piezas
+
+pieza_a_mover = input("Ingrese la coordenada de la pieza que quiere mover: ")
+coor_x, coor_y = pieza_a_mover[0], pieza_a_mover[1]
+coor_x = col_mapa[coor_x]
+coor_y = 8 - int(coor_y)
+coor_x, coor_y = coor_y, coor_x
+
+posicion = input("Ingrese la coordenada de la posición a la que quiere mover la pieza: ")
+coor_final_x, coor_final_y = posicion[0], posicion[1]
+coor_final_x = col_mapa[coor_final_x]
+coor_final_y = 8 - int(coor_final_y)
+coor_final_x, coor_final_y = coor_final_y, coor_final_x
+
+jugada = tablero[coor_x][coor_y]
+tablero[coor_x][coor_y] = " "
+tablero[coor_final_x][coor_final_y] = jugada
