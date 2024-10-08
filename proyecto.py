@@ -1,19 +1,23 @@
-# crear el tablero 8x8
-tablero = [0] * 8
+# diccionario para poder mapear las columnas
+col_mapa = { 
+    "a": 0,
+    "b": 1,
+    "c": 2,
+    "d": 3,
+    "e": 4,
+    "f": 5,
+    "g": 6,
+    "h": 7
+    }
 
-for i in range(len(tablero)):
-        tablero[i] = ["  "] * 8
+# crear un tablero vacío
+tamaño = [0] * 8
+def crear_tablero_vacío():
+    for i in range(len(tamaño)):
+        tamaño[i] = ["  "] * 8
+tablero = crear_tablero_vacío
 
-def tablero_estandard(tablero):
-    for i, row in enumerate(tablero):
-        print(8 - i, end = ": ")
-        for j, col in enumerate(row):
-            print(col, end = " ")
-        print("\n")
-    print(" " * 3 + "a" + " " * 2 + "b" + " " * 2 + "c" + " " * 2 + "d" + " " * 2 + "e" + " " * 2 + "f" + " " * 2 + "g" + " " * 2 + "h")
-
-# crear las piezas 
-
+# crear las piezas
 dic_piezas_blancas = {
     "bP": [(6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7)],
     "bC": [(7, 1), (7, 6)],
@@ -32,17 +36,6 @@ dic_piezas_negras = {
     "nR": [(0, 4)]
     }
 
-col_mapa = {
-    "a": 0,
-    "b": 1,
-    "c": 2,
-    "d": 3,
-    "e": 4,
-    "f": 5,
-    "g": 6,
-    "h": 7
-    }
-
 # poner piezas en el tablero
 def poner_piezas(tablero):
     for pieza, squares in dic_piezas_blancas.items(): # Piezas blancas
@@ -54,6 +47,48 @@ def poner_piezas(tablero):
         for square in squares:
                x, y = square[0], square[1]
                tablero[x][y] = pieza
+
+# función para imprimir el tablero estandard
+def tablero_estandard(tablero):
+    for i, row in enumerate(tablero):
+        print(8 - i, end = ": ")
+        for j, col in enumerate(row):
+            print(col, end = " ")
+        print("\n")
+    print(" " * 3 + "a" + " " * 2 + "b" + " " * 2 + "c" + " " * 2 + "d" + " " * 2 + "e" + " " * 2 + "f" + " " * 2 + "g" + " " * 2 + "h")
+
+# función para imprimir el menú principal        
+def imprimir_menu():
+    print("Escoja la opción deseada: ")
+    print("1. Posición estandart inicial")
+    print("2. Posición inventada")
+    print("3. Salir")
+
+# función para evaluar las opciones   
+def evaluar_opcion(opcion, tablero):
+    if opcion == "1":
+        poner_piezas(tablero)
+    elif opcion == "2":
+        tablero_inventado(tablero)
+    elif opcion == "3":
+        print("Saliendo del programa")
+        return True
+    return False
+
+
+# crear el tablero inventado
+def tablero_inventado(tablero):
+    for i, row in enumerate(tablero):
+        print(8 - i, end = ": ")
+        for j, col in enumerate(row):
+            print(col, end = " ")
+        print("\n")
+    print(" " * 3 + "a" + " " * 2 + "b" + " " * 2 + "c" + " " * 2 + "d" + " " * 2 + "e" + " " * 2 + "f" + " " * 2 + "g" + " " * 2 + "h")
+
+
+
+
+
 
 poner_piezas(tablero)
 
